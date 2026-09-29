@@ -85,6 +85,8 @@ final class SyncEngine {
         // after each timer action, background) are no-ops, which would otherwise be pure noise.
         if changed { Analytics.syncCompleted() }
         reportOutcome(push, uploads, changed: changed)
+        // The stash summary is re-read from here (``StashViewModel``), after the pull cached it.
+        NotificationCenter.default.post(name: .syncDidFinish, object: nil)
     }
 
     /// What one pass over a queue did. `Sync.completed` says only "something moved", which a
